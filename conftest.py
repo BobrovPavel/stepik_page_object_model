@@ -6,6 +6,8 @@ from selenium.webdriver.chrome.options import Options
 def pytest_addoption(parser):
     parser.addoption('--browser_name', action='store', default="chrome")
     parser.addoption('--language', action='store', default='ru')
+    parser.addoption('--timeout', action='store', default=10,
+                     help="Choose timeout time (seconds)")
 
 
 @pytest.fixture(scope="function")
