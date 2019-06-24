@@ -27,3 +27,9 @@ class ProductPage(BasePage):
 
     def should_be_match_the_name(self):
         return self.should_be_match_the_text(ProductPageLocators.PRODUCT_NAME, ProductPageLocators.SUCCESS_ALERT_PRODUCT_NAME)
+
+    def is_not_success_alert_present(self):
+        return self.is_not_element_present(ProductPageLocators.SUCCESS_ALERT)
+
+    def is_success_alert_disappeared(self):
+        return self.is_disappeared(ProductPageLocators.SUCCESS_ALERT)
