@@ -1,3 +1,4 @@
+import time
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -21,6 +22,7 @@ def browser(request):
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
         browser = webdriver.Chrome(options=options)
         browser.implicitly_wait(10)
+        time.sleep(1)
         browser.maximize_window()
 
     elif browser_name == "firefox":

@@ -1,8 +1,6 @@
-import time
+import math
 from selenium.webdriver.support import expected_conditions as EC
 from pages.locators import MainPageLocators
-
-import math
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -11,9 +9,14 @@ class BasePage(object):
     def __init__(self, browser, url):
         self.browser = browser
         self.url = url
+        self.wait = WebDriverWait(self.browser, 15)
 
     def open(self):
         self.browser.get(self.url)
+
+    def go_to_cart(self):
+        cart_button = self.browser.find_element(*MainPageLocators.OPEN_CART_BUTTON)
+        cart_button.click()
 
     def is_element_present(self, locator):
         try:
@@ -42,7 +45,11 @@ class BasePage(object):
         print("Your code: {}".format(alert.text))
         alert.accept()
 
-    def is_not_element_present(self, locator, timeout=4):
+    def should_be_authorized_user(self):
+        assert self.is_element_present(MainPageLocators.USER_ICON), "User icon is not presented," \
+                                                                    " probably unauthorised user"
+
+    def is_not_elements_present(self, locator, timeout=4):
         try:
             WebDriverWait(self.browser, timeout).until(EC.presence_of_all_elements_located(locator))
         except TimeoutException:
