@@ -50,12 +50,15 @@ class BasePage(object):
                                                                     " probably unauthorised user"
 
     def is_not_elements_present(self, locator, timeout=4):
+        # Мы уже находимся на странице, на которой нужно выполнить проверку
         try:
+            # Мы ищем пока появится элемент (точно также, как и во все остальных случаях)
+            # Но так как элемента на странцие быть не должно - мы получаем ошибку
             WebDriverWait(self.browser, timeout).until(EC.presence_of_all_elements_located(locator))
-        except TimeoutException:
-            return True
+        except TimeoutException:  # Здесь мы пытаемся "поймать" эту ошибку.
+            return True  # И если элемента нет и возникает ошибка - возвращаем True
 
-        return False
+        return False  # Если ошибки нет - нам вернется False (полная противоположность методу "is_element_present"
 
     def is_disappeared(self, locator, timeout=4):
         try:
